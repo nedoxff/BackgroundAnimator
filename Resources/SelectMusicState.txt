@@ -1,0 +1,44 @@
+Renderer.1 {
+    TextColor = rgb(190, 190, 190);
+    TextureBackground = None;
+
+    Scrollbar {
+        TextureArrowDown = "themes/Black.png" Part(0, 0, 20, 20) Middle(0, 1, 20, 19) Smooth;
+        TextureArrowDownHover = "themes/Black.png" Part(22, 0, 20, 20) Middle(0, 1, 20, 19) Smooth;
+        TextureArrowUp = "themes/Black.png" Part(44, 0, 20, 20) Middle(0, 0, 20, 19) Smooth;
+        TextureArrowUpHover = "themes/Black.png" Part(66, 0, 20, 20) Middle(0, 0, 20, 19) Smooth;
+        TextureThumb = "themes/Black.png" Part(68, 465, 20, 20) Smooth;
+        TextureThumbHover = "themes/Black.png" Part(90, 465, 20, 20) Smooth;
+        TextureTrack = "themes/Black.png" Part(0, 499, 20, 20) Smooth;
+        TextureTrackHover = "themes/Black.png" Part(22, 499, 20, 20) Smooth;
+    }
+}
+
+Label.Title {
+    HorizontalAlignment = Center;
+    Position = (0, 20);
+    Renderer = &1;
+    Size = (1280, 75);
+    Text = "Before we get started..";
+    TextSize = 48;
+}
+
+Label.Music {
+    HorizontalAlignment = Center;
+    Position = (0, 100);
+    Renderer = &1;
+    Size = (1280, 60);
+    Text = "Music:";
+    TextSize = 36;
+}
+
+Panel.FilePanel {
+    Position = (320, 170);
+    Size = (630, 438.75);
+
+    Renderer {
+        BackgroundColor = white;
+        BorderColor = black;
+        TextureBackground = None;
+    }
+}
