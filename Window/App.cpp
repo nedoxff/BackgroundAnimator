@@ -12,15 +12,15 @@ App::App() {
     Logger::Info("Creating the MainWindow..", true);
     Logger::EndStatus(true);
 
-    Logger::Info("Loading the Dark Theme..", true);
-    tgui::Theme::setDefault("Resources/themes/Black.txt");
-    Logger::EndStatus(true);
-
     Logger::Info("Loading resources..");
     auto resources = ResourceContainer::Get();
     mainWindow->GetGui()->setFont(resources->GetFont("opensans"));
 
-    Logger::Success("Initialized the App!\n");
+    Logger::Info("Loading the Dark Theme..", true);
+    tgui::Theme::setDefault(resources->GetResourcesPath() + "/themes/Black.txt");
+    Logger::EndStatus(true);
+
+    Logger::Success("Successfully initialized the App!\n");
 }
 
 void App::SetCurrentState(const std::shared_ptr<State> &currentState) {

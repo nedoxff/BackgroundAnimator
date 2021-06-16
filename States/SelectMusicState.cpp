@@ -9,7 +9,7 @@
 void SelectMusicState::OnCall(App *app) {
     //Load the UI.
     this->app = app;
-    LoadUI("Resources/SelectMusicState.txt");
+    LoadUI("SelectMusicState");
 
     //Get the TGUI widgets.
     title = GetUI(tgui::Label, "Title");

@@ -33,9 +33,10 @@ public:
     /**
      * Write a line with [ERROR] in the beginning.
      * @param string The string to output.
-     * @param status Should this log have status?
+     * @param throwException Throw an exception?
+     * @param exceptionString If throw an exception, what message to output?
      */
-    static void Error(const tgui::String& string, bool status = false);
+    static void Error(const tgui::String& string, bool throwException = true, const std::string& exceptionString = "");
     /**
      * Write a line with [SUCCESS] in the beginning.
      * No status is allowed here.

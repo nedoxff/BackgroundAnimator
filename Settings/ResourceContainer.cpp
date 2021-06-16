@@ -19,7 +19,7 @@ std::shared_ptr<ResourceContainer> ResourceContainer::Get() {
 void ResourceContainer::Load() {
     Logger::Info("ResourceContainer: Loading resources..");
     try {
-        Logger::Info("ResourceContainer: Loading fonts..");
+        FindResourcesDirectory();
         LoadFonts();
     }
     catch(std::runtime_error& exception) {
@@ -35,7 +35,9 @@ tgui::Font ResourceContainer::GetFont(const tgui::String &name) {
 
 //TODO: comment this file
 void ResourceContainer::LoadFonts() {
-        for (auto &file: fs::directory_iterator("Resources/Fonts")) {
+    Logger::Info("Loading fonts..");
+    try {
+        for (auto &file: fs::directory_iterator(resourcesPath.toStdString() + "/Fonts")) {
             auto path = file.path().string();
             Logger::Info("Loading font from " + path + "..", true);
             tgui::Font font(path);
@@ -46,4 +48,43 @@ void ResourceContainer::LoadFonts() {
                 Logger::EndStatus(true);
             }
         }
+        Logger::Success("Successfully loaded fonts!");
+    }
+    catch(std::runtime_error& exc)
+    {
+        Logger::Error("Failed to load fonts!", true, exc.what());
+        std::exit(1);
+    }
+}
+
+void ResourceContainer::FindResourcesDirectory() {
+    Logger::Info("Finding the Resources directory..", true);
+
+    try {
+        auto currentDirectory = fs::current_path();
+        int counter = 0;
+        while (!fs::exists(currentDirectory.string() + "/Resources")) {
+            currentDirectory = currentDirectory.parent_path();
+            counter++;
+            if (counter == 5)
+                throw std::runtime_error("Your Resources folder does not exist or it is too far from the executable!");
+        }
+        Logger::EndStatus(true);
+        resourcesPath = currentDirectory.string() + "/Resources";
+        Logger::Info("Resource directory is " + resourcesPath);
+    }
+    catch(std::runtime_error& exc)
+    {
+        Logger::EndStatus(false, true, exc.what());
+        std::exit(1);
+    }
+
+}
+
+void ResourceContainer::CheckResources() {
+
+}
+
+const tgui::String &ResourceContainer::GetResourcesPath() const {
+    return resourcesPath;
 }

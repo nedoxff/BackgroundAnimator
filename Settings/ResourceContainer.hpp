@@ -24,6 +24,11 @@ public:
     static std::shared_ptr<ResourceContainer> Get();
 
     /**
+     * Check if all resources needed for running the app exist.
+     */
+    void CheckResources();
+
+    /**
      * Load resources.
      */
     void Load();
@@ -34,6 +39,12 @@ public:
      * @return
      */
     tgui::Font GetFont(const tgui::String& name);
+    /**
+     * Get path to the directory containing all resources needed to run the app.
+     * @return The string containing the path.
+     */
+    [[nodiscard]] const tgui::String &GetResourcesPath() const;
+
 private:
     /**
      * A private singleton pointer.
@@ -45,9 +56,17 @@ private:
      */
     void LoadFonts();
     /**
+     * Find the directory containing resources and set it to \c resourcesPath.
+     */
+    void FindResourcesDirectory();
+    /**
      * The fonts map.
      */
     std::map<tgui::String, tgui::Font> fonts;
+    /**
+     * Path to the directory containing the resources.
+     */
+     tgui::String resourcesPath;
 };
 
 

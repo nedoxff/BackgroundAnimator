@@ -19,7 +19,7 @@ void MainState::OnCall(App *app) {
     this->app = app;
     this->settings = GlobalSettings::Get();
     this->resources = ResourceContainer::Get();
-    LoadUI("Resources/MainState.txt");
+    LoadUI("MainState");
     //Load Music
     Logger::Info("Loading music from " + settings->MusicPath + "..", true);
     if(!settings->Music.openFromFile(settings->MusicPath.toStdString()))

@@ -10,7 +10,7 @@
 void StartState::OnCall(App *app) {
     this->app = app;
     //Load the UI widgets.
-    LoadUI("Resources/StartState.txt");
+    LoadUI("StartState");
 
     //Get TGUI elements from the GUI.
     welcome = GetUI(tgui::Label, "Welcome");

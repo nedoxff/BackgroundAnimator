@@ -11,7 +11,7 @@
  */
 #define GUI app->GetMainWindow()->GetGui()
 #define GetUI(type, name) GUI->get<type>(name)
-#define LoadUI(file) GUI->loadWidgetsFromFile(file, true)
+#define LoadUI(file) GUI->loadWidgetsFromFile(ResourceContainer::Get()->GetResourcesPath() + "/" + file + ".txt", true)
 
 class App;
 /**
