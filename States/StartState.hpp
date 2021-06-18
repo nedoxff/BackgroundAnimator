@@ -22,7 +22,7 @@ public:
     tgui::String GetName() override;
     void HideUI() override;
     void ShowUI() override;
-    void AttachDialogEvents(tgui::FileDialog::Ptr dialog, bool callMainState = false);
+    void AttachDialogEvents(const tgui::FileDialog::Ptr& dialog, bool callMainState = false);
     /**
      * This method is called when New Scene was pressed.
      */

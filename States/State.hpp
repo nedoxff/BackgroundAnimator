@@ -5,15 +5,14 @@
 #ifndef BACKGROUNDANIMATOR_STATE_HPP
 #define BACKGROUNDANIMATOR_STATE_HPP
 #include <TGUI/String.hpp>
+#include "../Window/App.hpp"
 
 /**
  * Shortening my own code :D
  */
 #define GUI app->GetMainWindow()->GetGui()
 #define GetUI(type, name) GUI->get<type>(name)
-#define LoadUI(file) GUI->loadWidgetsFromFile(ResourceContainer::Get()->GetResourcesPath() + "/" + file + ".txt", true)
-
-class App;
+#define LoadUI() GUI->loadWidgetsFromFile(ResourceContainer::Get()->GetResourcesPath() + "/" + GetName() + ".txt", true)
 /**
  * This class describes a state in
  * which the app can be.
@@ -37,9 +36,15 @@ public:
      */
     virtual tgui::String GetName() = 0;
     /**
+     * Update the state.
+     */
+    virtual void Tick() {}
+    /**
      * Default destructor. Nothing special.
      */
-    virtual ~State() { app = nullptr; }
+    virtual ~State() {
+        app = nullptr;
+    }
     /**
      * Show the UI with any of the TGUI animation types.
      */
@@ -48,6 +53,7 @@ public:
      * Hide the UI with any of the TGUI animation types.
      */
     virtual void HideUI() {}
+
 protected:
     /**
      * Pointer to the app (the caller).

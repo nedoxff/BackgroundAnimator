@@ -10,9 +10,8 @@
  */
 #include "Window.hpp"
 #include "../Logging/Logger.hpp"
-#include "../States/State.hpp"
-#include "../States/StartState.hpp"
 #include <memory>
+class State;
 
 /**
  * The core of this project. The container
@@ -39,6 +38,10 @@ public:
      * Run the application.
      */
     void Run();
+    /**
+     * Go back to the previous state.
+     */
+    void ReturnToPreviousState();
 private:
     /**
      * The pointer to the wrapped Window.
@@ -48,6 +51,12 @@ private:
      * The pointer to the current state of the app.
      */
     std::shared_ptr<State> currentState;
+    /**
+     * If anything like a Controller was called, which is also a State,
+     * when exiting from it, it MUST go back to the previous state, which
+     * is usually the MainState.
+     */
+    std::shared_ptr<State> previousState;
 };
 
 

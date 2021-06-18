@@ -26,6 +26,7 @@ void MainButtonsSettings::Load() {
         auto colorPicker = std::make_shared<ColorController>();
         app->SetCurrentState(colorPicker);
         auto color = colorPicker->WaitForValue();
+        app->ReturnToPreviousState();
         Logger::Success("Works!");
     });
 

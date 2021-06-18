@@ -59,11 +59,6 @@ public:
      * @param backgroundColor The new color.
      */
     void SetBackgroundColor(const sf::Color &backgroundColor);
-    /**
-     * Set if onUpdate should be canceled.
-     * @param cancelUpdate New value.
-     */
-    void SetCancelUpdate(bool cancelUpdate);
 private:
     /**
      * The pointer to the wrapped sf::RenderWindow.

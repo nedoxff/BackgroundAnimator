@@ -19,7 +19,7 @@ void MainState::OnCall(App *app) {
     this->app = app;
     this->settings = GlobalSettings::Get();
     this->resources = ResourceContainer::Get();
-    LoadUI("MainState");
+    LoadUI();
     //Load Music
     Logger::Info("Loading music from " + settings->MusicPath + "..", true);
     if(!settings->Music.openFromFile(settings->MusicPath.toStdString()))
@@ -73,24 +73,7 @@ void MainState::OnAttachEvents() {
     });
 
     play->onClick.connect([=]{
-        auto status = settings->Music.getStatus();
-        if(status == sf::SoundSource::Paused || status == sf::SoundSource::Stopped) {
-            play->setText("⏸");
-            settings->Music.play();
-        }
-        else {
-            play->setText("▶");
-            settings->Music.pause();
-        }
-    });
-
-    app->GetMainWindow()->SetOnUpdate([=]{
-        if(settings->Music.getStatus() == sf::SoundSource::Playing) {
-            auto offset = settings->Music.getPlayingOffset().asMilliseconds();
-            progress->setValue(offset);
-            progress->setText(tgui::String::fromNumberRounded(static_cast<float>(offset) / 1000.f, 2) + "/" + durationString);
-            progressSlider->setValue(static_cast<float>(offset));
-        }
+        Play();
     });
 }
 
@@ -110,9 +93,9 @@ void MainState::LoadCategories() {
     Logger::Info("MainState: Loading categories..");
 
     //Get buttonsPanel from settings.
-    auto settings = buttonSettings.GetButtons();
+    auto buttons = buttonSettings.GetButtons();
     //Get each key from the map.
-    for(auto& category: settings)
+    for(auto& category: buttons)
         tabs->add(category.first);
 
     Logger::Success("MainState: Successfully loaded categories!");
@@ -136,6 +119,8 @@ void MainState::LoadButtons(const tgui::String& category) {
         //Create a new TGUI button.
         auto button = tgui::Button::create(obj.first);
         button->onClick.connect([=]{
+            if(settings->Music.getStatus() == sf::SoundSource::Playing)
+                Play();
             obj.second(app);
         });
         //Multiply the size of the button by SIZE_MULTIPLIER.
@@ -150,4 +135,25 @@ void MainState::LoadButtons(const tgui::String& category) {
     }
 
     Logger::Success("MainState: Successfully loaded buttons!");
+}
+
+void MainState::Tick() {
+    if(settings->Music.getStatus() == sf::SoundSource::Playing) {
+        auto offset = settings->Music.getPlayingOffset().asMilliseconds();
+        progress->setValue(offset);
+        progress->setText(tgui::String::fromNumberRounded(static_cast<float>(offset) / 1000.f, 2) + "/" + durationString);
+        progressSlider->setValue(static_cast<float>(offset));
+    }
+}
+
+void MainState::Play() {
+    auto status = settings->Music.getStatus();
+    if(status == sf::SoundSource::Paused || status == sf::SoundSource::Stopped) {
+        play->setText("⏸");
+        settings->Music.play();
+    }
+    else {
+        play->setText("▶");
+        settings->Music.pause();
+    }
 }

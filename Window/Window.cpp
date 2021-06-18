@@ -51,7 +51,7 @@ void Window::Update() {
         gui->handleEvent(event);
     }
     //Update (custom callback)
-    if(onUpdate && !cancelUpdate)
+    if(onUpdate)
         onUpdate();
     //Draw
     gui->draw();
@@ -65,8 +65,4 @@ const sf::Color &Window::GetBackgroundColor() const {
 
 void Window::SetBackgroundColor(const sf::Color &backgroundColor) {
     Window::backgroundColor = backgroundColor;
-}
-
-void Window::SetCancelUpdate(bool cancelUpdate) {
-    Window::cancelUpdate = cancelUpdate;
 }

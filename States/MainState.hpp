@@ -24,8 +24,13 @@ public:
     tgui::String GetName() override;
     void ShowUI() override;
     void HideUI() override;
+    void Tick() override;
 
 private:
+    /**
+     * Play the music.
+     */
+    void Play();
     /**
      * Global settings.
      */

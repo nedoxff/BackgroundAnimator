@@ -10,7 +10,7 @@
 void StartState::OnCall(App *app) {
     this->app = app;
     //Load the UI widgets.
-    LoadUI("StartState");
+    LoadUI();
 
     //Get TGUI elements from the GUI.
     welcome = GetUI(tgui::Label, "Welcome");
@@ -68,7 +68,7 @@ void StartState::ShowUI() {
     openScene->showWithEffect(tgui::ShowAnimationType::Fade, 1000.f);
 }
 
-void StartState::AttachDialogEvents(tgui::FileDialog::Ptr dialog, bool callMainState) {
+void StartState::AttachDialogEvents(const tgui::FileDialog::Ptr& dialog, bool callMainState) {
     dialog->onClosing.connect([=](bool* abort){
         //Cancel the closing first.
         *abort = true;
@@ -98,3 +98,4 @@ void StartState::AttachDialogEvents(tgui::FileDialog::Ptr dialog, bool callMainS
 tgui::String StartState::GetName() {
     return "StartState";
 }
+
