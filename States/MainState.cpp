@@ -19,10 +19,14 @@ void MainState::OnCall(App *app) {
     this->app = app;
     this->settings = GlobalSettings::Get();
     this->resources = ResourceContainer::Get();
+
+    app->GetProcessor()->ExecuteFirstInstructions();
+    app->GetProcessor()->SaveInstructions(settings->ScenePath);
+    
     LoadUI();
     //Load Music
     Logger::Info("Loading music from " + settings->MusicPath + "..", true);
-    if(!settings->Music.openFromFile(settings->MusicPath.toStdString()))
+    if (!settings->Music.openFromFile(settings->MusicPath.toStdString()))
         Logger::EndStatus(false, true, "MainState: Failed to load music!");
     else
         Logger::EndStatus(true);
@@ -57,22 +61,23 @@ void MainState::OnAttachEvents() {
     progress->setText("0.0/" + durationString);
 
     progressSlider->setMaximum(static_cast<float>(length));
-    progressSlider->onValueChange.connect([=]{
-        if(sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+    progressSlider->onValueChange.connect([=] {
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
             auto value = static_cast<int>(progressSlider->getValue());
             progress->setValue(value);
-            progress->setText(tgui::String::fromNumberRounded(static_cast<float>(value) / 1000.f, 2) + "/" + durationString);
+            progress->setText(
+                    tgui::String::fromNumberRounded(static_cast<float>(value) / 1000.f, 2) + "/" + durationString);
             settings->Music.setPlayingOffset(sf::milliseconds(value));
         }
     });
 
     //When the tab is changed, the panel should clear
     //and new buttonsPanel should be added.
-    tabs->onTabSelect.connect([=]{
+    tabs->onTabSelect.connect([=] {
         LoadButtons(tabs->getSelected());
     });
 
-    play->onClick.connect([=]{
+    play->onClick.connect([=] {
         Play();
     });
 }
@@ -95,13 +100,13 @@ void MainState::LoadCategories() {
     //Get buttonsPanel from settings.
     auto buttons = buttonSettings.GetButtons();
     //Get each key from the map.
-    for(auto& category: buttons)
+    for (auto &category: buttons)
         tabs->add(category.first);
 
     Logger::Success("MainState: Successfully loaded categories!");
 }
 
-void MainState::LoadButtons(const tgui::String& category) {
+void MainState::LoadButtons(const tgui::String &category) {
     Logger::Info("MainState: Loading buttons from \"" + category + "\"..");
 
     //Get buttonsPanel from the map.
@@ -114,12 +119,11 @@ void MainState::LoadButtons(const tgui::String& category) {
     //and is used when defining the position of the button.
     int counter = 0;
 
-    for(auto& obj: buttons)
-    {
+    for (auto &obj: buttons) {
         //Create a new TGUI button.
         auto button = tgui::Button::create(obj.first);
-        button->onClick.connect([=]{
-            if(settings->Music.getStatus() == sf::SoundSource::Playing)
+        button->onClick.connect([=] {
+            if (settings->Music.getStatus() == sf::SoundSource::Playing)
                 Play();
             obj.second(app);
         });
@@ -127,7 +131,8 @@ void MainState::LoadButtons(const tgui::String& category) {
         auto size = button->getSize();
         button->setSize({size.x * SIZE_MULTIPLIER, size.y * SIZE_MULTIPLIER});
         //Center the button by X, and move the button by Y by `counter * (size + BUTTON_OFFSET)`
-        button->setPosition({"(parent.innersize - size) / 2", static_cast<float>(counter) * (size.y * SIZE_MULTIPLIER + BUTTON_OFFSET)});
+        button->setPosition({"(parent.innersize - size) / 2",
+                             static_cast<float>(counter) * (size.y * SIZE_MULTIPLIER + BUTTON_OFFSET)});
 
         //Add the button!
         buttonsPanel->add(button);
@@ -138,21 +143,21 @@ void MainState::LoadButtons(const tgui::String& category) {
 }
 
 void MainState::Tick() {
-    if(settings->Music.getStatus() == sf::SoundSource::Playing) {
+    if (settings->Music.getStatus() == sf::SoundSource::Playing) {
         auto offset = settings->Music.getPlayingOffset().asMilliseconds();
         progress->setValue(offset);
-        progress->setText(tgui::String::fromNumberRounded(static_cast<float>(offset) / 1000.f, 2) + "/" + durationString);
+        progress->setText(
+                tgui::String::fromNumberRounded(static_cast<float>(offset) / 1000.f, 2) + "/" + durationString);
         progressSlider->setValue(static_cast<float>(offset));
     }
 }
 
 void MainState::Play() {
     auto status = settings->Music.getStatus();
-    if(status == sf::SoundSource::Paused || status == sf::SoundSource::Stopped) {
+    if (status == sf::SoundSource::Paused || status == sf::SoundSource::Stopped) {
         play->setText("⏸");
         settings->Music.play();
-    }
-    else {
+    } else {
         play->setText("▶");
         settings->Music.pause();
     }

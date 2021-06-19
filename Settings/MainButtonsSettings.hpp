@@ -32,20 +32,24 @@ public:
      * @return The settings.
      */
     static MainButtonsSettings Get();
+
     /**
      * Get button settings.
      * @return The map containing categories and buttonsPanel with their callbacks.
      */
     [[nodiscard]] const BUTTONS_MAP &GetButtons() const;
+
 private:
     /**
      * Pointer to the only instance of MainButtonsSettings.
      */
     static std::unique_ptr<MainButtonsSettings> singleton;
+
     /**
      * Load settings into the map.
      */
     void Load();
+
     /**
      * Add a button into the map.
      * @param category The category where the button is.

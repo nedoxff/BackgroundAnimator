@@ -10,11 +10,13 @@
 App::App() {
     Logger::Info("Initializing the App..");
 
+    processor = std::make_shared<InstructionProcessor>(this);
+
     Logger::Info("Creating the MainWindow..");
     mainWindow = std::make_unique<Window>(1280, 720, "Background Animator");
-    mainWindow->SetOnUpdate([=]{
-       if(currentState)
-           currentState->Tick();
+    mainWindow->SetOnUpdate([=] {
+        if (currentState)
+            currentState->Tick();
     });
 
     Logger::Info("Loading resources..");
@@ -48,13 +50,17 @@ const std::unique_ptr<Window> &App::GetMainWindow() const {
 void App::Run() {
     auto startState = std::make_shared<StartState>();
     SetCurrentState(startState);
-    while(mainWindow->GetWindow()->isOpen())
+    while (mainWindow->GetWindow()->isOpen())
         mainWindow->Update();
 }
 
 void App::ReturnToPreviousState() {
-    if(previousState) {
+    if (previousState) {
         App::currentState = App::previousState;
         Logger::Success("App: Successfully restored the previous state: " + currentState->GetName() + "!");
     }
+}
+
+const std::shared_ptr<InstructionProcessor> &App::GetProcessor() const {
+    return processor;
 }

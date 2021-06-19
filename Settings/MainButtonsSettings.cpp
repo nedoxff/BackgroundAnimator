@@ -10,7 +10,7 @@ std::unique_ptr<MainButtonsSettings> MainButtonsSettings::singleton;
 
 MainButtonsSettings MainButtonsSettings::Get() {
     //If pointer is nullptr, create new settings and load them.
-    if(!singleton) {
+    if (!singleton) {
         singleton = std::make_unique<MainButtonsSettings>();
         singleton->Load();
     }
@@ -22,7 +22,7 @@ void MainButtonsSettings::Load() {
     Logger::Info("MainButtonsSettings: Loading button events..");
 
     //TODO
-    RegisterButton("Basic", "Change Background", [=](App* app){
+    RegisterButton("Basic", "Change Background", [=](App *app) {
         auto colorPicker = std::make_shared<ColorController>();
         app->SetCurrentState(colorPicker);
         auto color = colorPicker->WaitForValue();

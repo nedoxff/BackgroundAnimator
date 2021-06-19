@@ -28,19 +28,19 @@ void SelectMusicState::OnCall(App *app) {
 
 void SelectMusicState::OnAttachEvents() {
     //Do not allow moving the file dialog.
-    dialog->onPositionChange.connect([=]{
+    dialog->onPositionChange.connect([=] {
         dialog->setPosition({0, 0});
     });
     //Do not allow canceling the action.
-    dialog->onClosing.connect([=](bool* abort){
+    dialog->onClosing.connect([=](bool *abort) {
         *abort = true;
         //Else if Open was pressed, call the MainState.
-        if(!dialog->getSelectedPaths().empty())
-        {
+        if (!dialog->getSelectedPaths().empty()) {
             //Slowly hide the UI.
             HideUI();
-            tgui::Timer::scheduleCallback([=]{
-                GlobalSettings::Get()->MusicPath = dialog->getSelectedPaths()[0].asString();
+            tgui::Timer::scheduleCallback([=] {
+                //GlobalSettings::Get()->MusicPath = dialog->getSelectedPaths()[0].asString();
+                app->GetProcessor()->GetHelper().RegisterMusic(dialog->getSelectedPaths()[0].asString());
                 //Remove the dialog.
                 GUI->remove(GUI->get("Dialog"));
                 //Switch to the MainState.

@@ -17,13 +17,18 @@
 /**
  * The state where the work happens.
  */
-class MainState: public State {
+class MainState : public State {
 public:
     void OnCall(App *app) override;
+
     void OnAttachEvents() override;
+
     tgui::String GetName() override;
+
     void ShowUI() override;
+
     void HideUI() override;
+
     void Tick() override;
 
 private:
@@ -31,6 +36,7 @@ private:
      * Play the music.
      */
     void Play();
+
     /**
      * Global settings.
      */
@@ -38,21 +44,24 @@ private:
     /**
      * Resource settings.
      */
-     std::shared_ptr<ResourceContainer> resources;
+    std::shared_ptr<ResourceContainer> resources;
     /**
      * Button settings.
      */
     MainButtonsSettings buttonSettings;
+
     /**
      * Load buttonsPanel from a category (and add them to \c buttonsPanel).
      * @param category The name of the category.
      */
-    void LoadButtons(const tgui::String& category);
+    void LoadButtons(const tgui::String &category);
+
     /**
      * Load categories from the settings.
      * \see MainButtonsSettings
      */
     void LoadCategories();
+
     /**
      * To not recreate the string each update call,
      * this string stores the duration of the audio.

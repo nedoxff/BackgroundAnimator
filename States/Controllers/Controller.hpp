@@ -10,12 +10,15 @@
 #include "../State.hpp"
 
 template<class ReturnValue, class WindowType>
-class Controller: public State {
+class Controller : public State {
 public:
     virtual ReturnValue WaitForValue() = 0;
+
 protected:
     virtual typename WindowType::Ptr CreateWindow() = 0;
+
     virtual void OnValueChange() = 0;
+
     ReturnValue TempObject;
     bool Finished{};
 };

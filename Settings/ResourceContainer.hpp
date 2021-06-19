@@ -38,7 +38,8 @@ public:
      * @param name
      * @return
      */
-    tgui::Font GetFont(const tgui::String& name);
+    tgui::Font GetFont(const tgui::String &name);
+
     /**
      * Get path to the directory containing all resources needed to run the app.
      * @return The string containing the path.
@@ -55,10 +56,12 @@ private:
      * Load fonts from Resources/Fonts.
      */
     void LoadFonts();
+
     /**
      * Find the directory containing resources and set it to \c resourcesPath.
      */
     void FindResourcesDirectory();
+
     /**
      * The fonts map.
      */
@@ -66,7 +69,7 @@ private:
     /**
      * Path to the directory containing the resources.
      */
-     tgui::String resourcesPath;
+    tgui::String resourcesPath;
 };
 
 

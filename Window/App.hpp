@@ -10,7 +10,9 @@
  */
 #include "Window.hpp"
 #include "../Logging/Logger.hpp"
+#include "../Instructions/InstructionProcessor.hpp"
 #include <memory>
+
 class State;
 
 /**
@@ -24,33 +26,46 @@ public:
      * The constructor.
      */
     App();
+
     /**
      * Set the state of the app.
      * @param currentState The state.
      */
     void SetCurrentState(const std::shared_ptr<State> &currentState);
+
     /**
-     * Get the main window.
-     * @return The main window..?
+     * @return The main window.
      */
     [[nodiscard]] const std::unique_ptr<Window> &GetMainWindow() const;
+
     /**
      * Run the application.
      */
     void Run();
+
     /**
      * Go back to the previous state.
      */
     void ReturnToPreviousState();
+
+    /**
+     * @return The InstructionProcessor.
+     */
+    [[nodiscard]] const std::shared_ptr<InstructionProcessor> &GetProcessor() const;
+
 private:
     /**
-     * The pointer to the wrapped Window.
+     * Pointer to the wrapped Window.
      */
     std::unique_ptr<Window> mainWindow;
     /**
-     * The pointer to the current state of the app.
+     * Pointer to the current state of the app.
      */
     std::shared_ptr<State> currentState;
+    /**
+     * Pointer to the InstructionProcessor.
+     */
+    std::shared_ptr<InstructionProcessor> processor;
     /**
      * If anything like a Controller was called, which is also a State,
      * when exiting from it, it MUST go back to the previous state, which

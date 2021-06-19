@@ -20,8 +20,8 @@ void StartState::OnCall(App *app) {
 }
 
 void StartState::OnAttachEvents() {
-    newScene->onPress.connect([=]{this->NewScene();});
-    openScene->onPress.connect([=]{this->OpenScene();});
+    newScene->onPress.connect([=] { this->NewScene(); });
+    openScene->onPress.connect([=] { this->OpenScene(); });
 }
 
 void StartState::NewScene() {
@@ -68,26 +68,23 @@ void StartState::ShowUI() {
     openScene->showWithEffect(tgui::ShowAnimationType::Fade, 1000.f);
 }
 
-void StartState::AttachDialogEvents(const tgui::FileDialog::Ptr& dialog, bool callMainState) {
-    dialog->onClosing.connect([=](bool* abort){
+void StartState::AttachDialogEvents(const tgui::FileDialog::Ptr &dialog, bool callMainState) {
+    dialog->onClosing.connect([=](bool *abort) {
         //Cancel the closing first.
         *abort = true;
         //If Cancel or Close was pressed, show the buttonsPanel again.
-        if(dialog->getSelectedPaths().empty())
+        if (dialog->getSelectedPaths().empty())
             ShowUI();
         //Else, slowly fade out the dialog and only then close.
         dialog->hideWithEffect(tgui::ShowAnimationType::Fade, 1000.f);
         //Schedule removing the dialog after a second (when the fade finishes).
-        tgui::Timer::scheduleCallback([=]{
+        tgui::Timer::scheduleCallback([=] {
             GlobalSettings::Get()->ScenePath = dialog->getSelectedPaths()[0].asString();
             GUI->remove(GUI->get("Dialog"));
-            if(callMainState)
-            {
+            if (callMainState) {
                 auto mainState = std::make_shared<MainState>();
                 app->SetCurrentState(mainState);
-            }
-            else
-            {
+            } else {
                 auto selectMusic = std::make_shared<SelectMusicState>();
                 app->SetCurrentState(selectMusic);
             }

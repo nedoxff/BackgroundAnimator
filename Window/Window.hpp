@@ -28,37 +28,43 @@ public:
      * @param title The title of the window.
      * @param resizable Should the window be resizable? Defaults to false.
      */
-    Window(unsigned int width, unsigned int height, const tgui::String& title, bool resizable = false);
+    Window(unsigned int width, unsigned int height, const tgui::String &title, bool resizable = false);
 
     /**
      * Get the sf::RenderWindow.
      * @return The wrapped sf::RenderWindow.
      */
     [[nodiscard]] const std::unique_ptr<sf::RenderWindow> &GetWindow() const;
+
     /**
      * Get the tgui::GuiSFML.
      * @return The wrapped tgui::GuiSFML.
      */
     [[nodiscard]] const std::unique_ptr<tgui::GuiSFML> &GetGui() const;
+
     /**
      * Set the callback for updating the window.
      * @param onUpdate The callback.
      */
     void SetOnUpdate(const std::function<void()> &onUpdate);
+
     /**
      * Update the window (Clear, Update, Draw).
      */
     void Update();
+
     /**
      * Get the background color of the window.
      * @return The color.
      */
     [[nodiscard]] const sf::Color &GetBackgroundColor() const;
+
     /**
      * Set the background color of the window.
      * @param backgroundColor The new color.
      */
     void SetBackgroundColor(const sf::Color &backgroundColor);
+
 private:
     /**
      * The pointer to the wrapped sf::RenderWindow.
@@ -81,7 +87,7 @@ private:
      * Should the onUpdate function be temporarily canceled?
      * \remarks Useful for controllers.
      */
-     bool cancelUpdate;
+    bool cancelUpdate;
 };
 
 

@@ -15,13 +15,18 @@
  * The state which is called before actually
  * creating a new scene.
  */
-class SelectMusicState: public State {
+class SelectMusicState : public State {
 public:
     void OnCall(App *app) override;
+
     void OnAttachEvents() override;
+
     tgui::String GetName() override;
+
     void ShowUI() override;
+
     void HideUI() override;
+
 private:
     /**
      * TGUI widgets.

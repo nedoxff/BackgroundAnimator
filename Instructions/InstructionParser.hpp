@@ -9,11 +9,14 @@
  * Includes.
  */
 #include "Instruction.hpp"
+#include "../Logging/Logger.hpp"
+#include <fstream>
 #include <vector>
 
 /**
  * A class for parsing the scripting language (or, storage format) containing
  * the instructions to actual instances of \c Instruction.
+ * \see Instruction
  */
 class InstructionParser {
 public:
@@ -22,7 +25,7 @@ public:
      * @param path Path to a file containing instructions.
      * @return Formatted, parsed Instructions.
      */
-    static std::vector<Instruction> Parse(const tgui::String& path);
+    static std::vector<Instruction> Parse(const tgui::String &path);
 };
 
 

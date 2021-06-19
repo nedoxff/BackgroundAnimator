@@ -3,13 +3,13 @@
 //
 
 #include "ResourceContainer.hpp"
+
 namespace fs = std::filesystem;
 
 std::shared_ptr<ResourceContainer> ResourceContainer::singleton;
 
 std::shared_ptr<ResourceContainer> ResourceContainer::Get() {
-    if(!singleton)
-    {
+    if (!singleton) {
         singleton = std::make_shared<ResourceContainer>();
         singleton->Load();
     }
@@ -22,14 +22,15 @@ void ResourceContainer::Load() {
         FindResourcesDirectory();
         LoadFonts();
     }
-    catch(std::runtime_error& exception) {
+    catch (std::runtime_error &exception) {
         Logger::Error(exception.what());
     }
 }
 
 tgui::Font ResourceContainer::GetFont(const tgui::String &name) {
-    if(fonts.find(name) == fonts.end())
-        throw std::runtime_error("ResourceContainer: A font with name \"" + name.toStdString() + "\" was not found in the fonts map!");
+    if (fonts.find(name) == fonts.end())
+        throw std::runtime_error(
+                "ResourceContainer: A font with name \"" + name.toStdString() + "\" was not found in the fonts map!");
     return fonts[name];
 }
 
@@ -50,8 +51,7 @@ void ResourceContainer::LoadFonts() {
         }
         Logger::Success("Successfully loaded fonts!");
     }
-    catch(std::runtime_error& exc)
-    {
+    catch (std::runtime_error &exc) {
         Logger::Error("Failed to load fonts!", true, exc.what());
         std::exit(1);
     }
@@ -73,8 +73,7 @@ void ResourceContainer::FindResourcesDirectory() {
         resourcesPath = currentDirectory.string() + "/Resources";
         Logger::Info("Resource directory is " + resourcesPath);
     }
-    catch(std::runtime_error& exc)
-    {
+    catch (std::runtime_error &exc) {
         Logger::EndStatus(false, true, exc.what());
         std::exit(1);
     }

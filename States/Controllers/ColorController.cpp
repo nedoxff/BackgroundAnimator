@@ -6,7 +6,7 @@
 #include "../../Window/App.hpp"
 
 sf::Color ColorController::WaitForValue() {
-    while(!Finished)
+    while (!Finished)
         app->GetMainWindow()->Update();
     return TempObject;
 }
@@ -31,13 +31,13 @@ void ColorController::OnCall(App *app) {
 }
 
 void ColorController::OnAttachEvents() {
-    window->onColorChange.connect([=]{
+    window->onColorChange.connect([=] {
         TempObject = window->getColor();
         OnValueChange();
     });
-    window->onOkPress.connect([=]{
-       TempObject = window->getColor();
-       Finished = true;
+    window->onOkPress.connect([=] {
+        TempObject = window->getColor();
+        Finished = true;
     });
 
     app->GetMainWindow()->GetGui()->add(window);

@@ -19,7 +19,8 @@ public:
      * Get the pointer to the singleton container.
      * @return
      */
-    static std::shared_ptr<GlobalSettings>& Get();
+    static std::shared_ptr<GlobalSettings> &Get();
+
     /**
      * The path to the scene file.
      */

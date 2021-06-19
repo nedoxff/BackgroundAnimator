@@ -8,7 +8,7 @@
 #include "Controller.hpp"
 #include <SFML/Graphics.hpp>
 
-class ColorController: public Controller<sf::Color, tgui::ColorPicker> {
+class ColorController : public Controller<sf::Color, tgui::ColorPicker> {
 public:
     sf::Color WaitForValue() override;
 

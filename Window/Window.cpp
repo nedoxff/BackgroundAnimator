@@ -7,7 +7,7 @@
 Window::Window(unsigned int width, unsigned int height, const tgui::String &title, bool resizable) {
     //Create a sf::RenderWindow
     Logger::Info("Creating a new window with title: \"" + title + "\"..", true);
-    if(title.empty())
+    if (title.empty())
         Logger::EndStatus(false, true, "Window: The title was empty.");
     window = std::make_unique<sf::RenderWindow>(sf::VideoMode(width, height),
                                                 title.toStdString(),
@@ -40,10 +40,9 @@ void Window::Update() {
     window->clear(backgroundColor);
     //Handle events
     sf::Event event{};
-    while(window->pollEvent(event))
-    {
+    while (window->pollEvent(event)) {
         //SFML Handling
-        if(event.type == sf::Event::Closed) {
+        if (event.type == sf::Event::Closed) {
             Logger::Info("Shutting down the app..");
             window->close();
         }
@@ -51,7 +50,7 @@ void Window::Update() {
         gui->handleEvent(event);
     }
     //Update (custom callback)
-    if(onUpdate)
+    if (onUpdate)
         onUpdate();
     //Draw
     gui->draw();

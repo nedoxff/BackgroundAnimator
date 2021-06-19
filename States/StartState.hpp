@@ -15,22 +15,30 @@
 /**
  * The state with which the app starts.
  */
-class StartState: public State {
+class StartState : public State {
 public:
     void OnCall(App *app) override;
+
     void OnAttachEvents() override;
+
     tgui::String GetName() override;
+
     void HideUI() override;
+
     void ShowUI() override;
-    void AttachDialogEvents(const tgui::FileDialog::Ptr& dialog, bool callMainState = false);
+
+    void AttachDialogEvents(const tgui::FileDialog::Ptr &dialog, bool callMainState = false);
+
     /**
      * This method is called when New Scene was pressed.
      */
     void NewScene();
+
     /**
      * This method is called when Open Scene was pressed.
      */
     void OpenScene();
+
     /**
      * TGUI widgets.
      */

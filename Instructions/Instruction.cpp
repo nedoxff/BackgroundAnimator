@@ -7,12 +7,12 @@
 #include <utility>
 
 std::map<InstructionType, tgui::String> Instruction::TypeToString = {
-        {RegisterSong, "RegisterSong"}
+        {RegisterMusic, "RegisterMusic"}
 };
 
 Instruction::Instruction(unsigned int millisecond, InstructionType type,
                          std::map<tgui::String, tgui::String> arguments) : millisecond(millisecond), type(type),
-                                                                                  arguments(std::move(arguments)) {}
+                                                                           arguments(std::move(arguments)) {}
 
 unsigned int Instruction::GetMillisecond() const {
     return millisecond;
